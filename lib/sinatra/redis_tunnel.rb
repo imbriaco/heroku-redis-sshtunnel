@@ -5,11 +5,8 @@ require 'tcp_tunnel'
 module Sinatra
   module RedisTunnel
     def redis_tunnel
-      return @redis_tunnel if defined?(@redis_tunnel)
-
       tunnel = URI.parse(ENV['TUNNEL_URL'])
-      @redis_tunnel = TCPTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])     
-      return @redis_tunnel
+      @redis_tunnel ||= TCPTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])
     end
     
     def redis
