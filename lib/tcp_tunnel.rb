@@ -15,6 +15,11 @@ class TCPTunnel
     end
 
     @pid = connect
+
+    at_exit do
+      Process.kill("TERM", @pid)
+      Process.wait(@pid)
+    end
   end
 
   private

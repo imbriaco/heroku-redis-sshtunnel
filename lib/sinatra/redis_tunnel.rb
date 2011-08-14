@@ -8,13 +8,7 @@ module Sinatra
       return @redis_tunnel if defined?(@redis_tunnel)
 
       tunnel = URI.parse(ENV['TUNNEL_URL'])
-      @redis_tunnel = TCPTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])
-
-      at_exit do
-        Process.kill("TERM", @redis_tunnel.pid)
-        Process.wait(@redis_tunnel.pid) 
-      end
-      
+      @redis_tunnel = TCPTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])     
       return @redis_tunnel
     end
     
