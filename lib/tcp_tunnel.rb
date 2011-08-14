@@ -8,11 +8,13 @@ class TCPTunnel
 
   def initialize(user, host, port, key_data)
     @user, @host, @port, @key_data = user, host, port, key_data
-    @socket ||= begin
-      path = "/tmp/tcp_tunnel_#{user}@#{host}_#{port}.sock"
-      FileUtils.rm_f(path)
-      UNIXServer.new(path)
-    end
+    @socket ||= 
+      begin
+        path = "/tmp/tcp_tunnel_#{user}@#{host}_#{port}.sock"
+        STDERR.puts "#{self.class}: Creating new UNIX socket server at #{path}."
+        FileUtils.rm_f(path)
+        UNIXServer.new(path)
+      end
 
     @pid = connect
 
@@ -35,12 +37,14 @@ class TCPTunnel
 
       while true 
         begin
+          STDERR.puts "#{self.class}: Establishing new SSH session to #{@user}@#{@host}."
           Net::SSH.start(@host, @user, :key_data => @key_data) do |ssh|
+            STDERR.puts "#{self.class}: Setting up SSH port forwarding for #{socket.path} to remote host port #{@port}."
             ssh.forward.local(socket, "localhost", @port)
             ssh.loop { true }
           end
         rescue IOError => ioe
-          STDERR.puts "#{self.class} caught IO error: #{ioe.to_s}. Attempting to reconnect."
+          STDERR.puts "#{self.class}: Caught IO error: #{ioe.to_s}. Attempting to reconnect."
         end
       end
     end
