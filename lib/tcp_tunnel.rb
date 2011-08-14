@@ -11,7 +11,7 @@ class TCPTunnel
     @socket ||= 
       begin
         path = "/tmp/tcp_tunnel_#{user}@#{host}_#{port}.sock"
-        STDERR.puts "#{self.class}: Creating new UNIX socket server at #{path}."
+        STDERR.puts "#{self.class}: Creating new UNIX socket server at #{path}." if ENV['DEBUG']
         FileUtils.rm_f(path)
         UNIXServer.new(path)
       end
@@ -37,9 +37,9 @@ class TCPTunnel
 
       while true 
         begin
-          STDERR.puts "#{self.class}: Establishing new SSH session to #{@user}@#{@host}."
+          STDERR.puts "#{self.class}: Establishing new SSH session to #{@user}@#{@host}." if ENV['DEBUG']
           Net::SSH.start(@host, @user, :key_data => @key_data) do |ssh|
-            STDERR.puts "#{self.class}: Setting up SSH port forwarding for #{socket.path} to remote host port #{@port}."
+            STDERR.puts "#{self.class}: Setting up SSH port forwarding for #{socket.path} to remote host port #{@port}." if ENV['DEBUG']
             ssh.forward.local(socket, "localhost", @port)
             ssh.loop { true }
           end
