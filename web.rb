@@ -6,6 +6,7 @@ require 'sinatra/redis_tunnel'
 require 'json'
 
 get '/' do
+  content_type 'application/json'
   redis.info.to_json
 end
 
