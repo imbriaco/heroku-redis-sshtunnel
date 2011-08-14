@@ -40,7 +40,7 @@ This example is geared to run under Heroku and you'll need to setup a few config
 
     $ heroku create --stack cedar
     $ heroku config:add TUNNEL_URL='tunnel://tunnel@1.2.3.4:6379/' TUNNEL_SSH_KEY='-----BEGIN RSA PRIVATE KEY-----...' REDIS_PASSWORD='mypassword'
-    $ git push heroku
+    $ git push heroku master
 
 At this point, your application should be running on Heroku and communicating with your external Redis server over an SSH tunnel. You can check to see if it's working by hitting the / URL which should return the Redis server INFO as a JSON document:
 
