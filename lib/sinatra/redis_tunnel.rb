@@ -1,6 +1,6 @@
 
 require 'redis'
-require 'tcp_tunnel'
+require 'ssh_tunnel'
 
 module Sinatra
   module RedisTunnel
@@ -8,8 +8,8 @@ module Sinatra
       tunnel = URI.parse(ENV['TUNNEL_URL'])
       @redis_tunnel ||= 
         begin
-          STDERR.puts "#{self.class}: Establishing new TCPTunnel connection." if ENV['DEBUG']
-          TCPTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])
+          STDERR.puts "#{self.class}: Establishing new SSHTunnel connection." if ENV['DEBUG']
+          SSHTunnel.new(tunnel.user, tunnel.host, tunnel.port, ENV['TUNNEL_SSH_KEY'])
         end
     end
     

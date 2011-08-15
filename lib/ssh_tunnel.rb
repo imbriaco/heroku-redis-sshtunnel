@@ -3,14 +3,14 @@ require 'fileutils'
 require 'socket'
 require 'net/ssh'
 
-class TCPTunnel
+class SSHTunnel
   attr_reader :socket, :user, :host, :port, :pid
 
   def initialize(user, host, port, key_data)
     @user, @host, @port, @key_data = user, host, port, key_data
     @socket ||= 
       begin
-        path = "/tmp/tcp_tunnel_#{user}@#{host}_#{port}.sock"
+        path = "/tmp/ssh_tunnel_#{user}@#{host}_#{port}.sock"
         STDERR.puts "#{self.class}: Creating new UNIX socket server at #{path}." if ENV['DEBUG']
         FileUtils.rm_f(path)
         UNIXServer.new(path)
