@@ -1,14 +1,9 @@
-GIT
-  remote: git://github.com/imbriaco/net-ssh
-  revision: 9b80fd31762ab99fd5ff9fe3262f0665a040e2c9
-  specs:
-    net-ssh (2.1.4)
-
 GEM
   remote: http://rubygems.org/
   specs:
     daemons (1.1.4)
     eventmachine (0.12.10)
+    net-ssh (2.2.0)
     rack (1.3.2)
     redis (2.2.2)
     sinatra (1.2.6)
@@ -24,7 +19,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  net-ssh!
+  net-ssh (~> 2.2)
   redis
   sinatra
   thin
