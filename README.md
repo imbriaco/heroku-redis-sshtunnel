@@ -1,7 +1,7 @@
 Heroku Redis SSH Tunnel Example
 ===============================
 
-This example application includes a Sinatra extension for connecting to Redis using a UNIX domain socket that is forwarded over an SSH tunnel to a remote server. A very simple application is included to illustrate that Redis can be accessed normally -- the tunnel management is completely abstracted into the Sinatra::RedisTunnel extension. This pattern should be easily applicable to other services that strong encryption or authentication which you want to access remotely.
+This example application includes a Sinatra extension for connecting to Redis using a Unix domain socket that is forwarded over an SSH tunnel to a remote server. A very simple application is included to illustrate that Redis can be accessed normally -- the tunnel management is completely abstracted into the Sinatra::RedisTunnel extension. This pattern should be easily applicable to other services that lack strong encryption or authentication which you want to access remotely.
 
 First, you'll need to create an SSH keypair and setup a Redis server that can be accessed with this keypair. If you're using Ubuntu Linux, this may look something like this, assuming you're running as the root user. YMMV.
 
